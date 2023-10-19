@@ -5,9 +5,10 @@ class Pelota {
     this.velx = 0;
     this.vely = 0;
     this.acely = 0.98;
-    this.diam = int(random(10, 50));
+
+    this.diam = int(random(5, 50));
     this.rad = this.diam / 2;
-    this.clor = color(255, random(100, 200), random(0, 355));
+    this.colorin = color(255, random(100, 250), random(0, 150));
 
     print("ya");
   }
@@ -17,13 +18,20 @@ class Pelota {
       this.vely += this.acely;
       this.posy += this.vely;
     } else {
-      this.vely *= -1;
+      this.vely *= -1.0;
       this.posy += this.vely;
     }
+    if (this.posx > windowWidth) {
+      this.velx *= -1;
+    }
+    if (this.posx < 0) {
+      this.velx *= -1;
+    }
+    this.posx += this.velx;
   }
 
   display() {
-    fill(this.clor);
+    fill(this.colorin);
     circle(this.posx, this.posy, this.diam);
   }
 }
