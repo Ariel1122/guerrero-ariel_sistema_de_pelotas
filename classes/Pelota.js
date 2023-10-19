@@ -10,7 +10,7 @@ class Pelota {
     this.rad = this.diam / 2;
     this.colorin = color(255, random(100, 250), random(0, 150));
 
-    print("ya");
+    // print("ya");
   }
 
   update(_piso) {
