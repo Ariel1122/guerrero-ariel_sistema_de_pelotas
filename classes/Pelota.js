@@ -2,31 +2,35 @@ class Pelota {
   constructor() {
     this.posx = random(50, windowWidth - 50);
     this.posy = random(50, 70);
-    this.velx = 0;
-    this.vely = 0;
+    this.velx = random(-5, 5); // Agregar velocidad inicial en X
+    this.vely = random(5, 15); // Agregar velocidad inicial en Y
     this.acely = 0.98;
 
     this.diam = int(random(5, 50));
     this.rad = this.diam / 2;
     this.colorin = color(255, random(100, 250), random(0, 150));
-
-    // print("ya");
   }
 
   update(_piso) {
-    if (this.posy + this.rad <= _piso) {
-      this.vely += this.acely;
-      this.posy += this.vely;
-    } else {
-      this.vely *= -1.0;
-      this.posy += this.vely;
+    this.vely += this.acely;
+    this.posy += this.vely;
+
+    // Verificar si la pelota ha llegado al suelo
+    if (this.posy + this.rad >= _piso) {
+      this.posy = _piso - this.rad; // Asegurarse de que no pase más allá del suelo
+      this.vely *= -0.9; // Rebote con una pérdida de energía (coeficiente de restitución)
+      this.velx *= 0.99; // Simular una pequeña pérdida de energía en la dirección X
     }
-    if (this.posx > windowWidth) {
-      this.velx *= -1;
+
+    // Verificar si la pelota ha llegado a los bordes de la ventana
+    if (this.posx + this.rad >= windowWidth) {
+      this.posx = windowWidth - this.rad; // Asegurarse de que no pase más allá del borde derecho
+      this.velx *= -1; // Invertir la dirección en X al llegar al borde
+    } else if (this.posx - this.rad <= 0) {
+      this.posx = this.rad; // Asegurarse de que no pase más allá del borde izquierdo
+      this.velx *= -1; // Invertir la dirección en X al llegar al borde
     }
-    if (this.posx < 0) {
-      this.velx *= -1;
-    }
+
     this.posx += this.velx;
   }
 
