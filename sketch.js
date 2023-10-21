@@ -2,9 +2,9 @@ pelotas = [];
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
-  print(pelotas);
+  // print(pelotas);
 }
-// >>=====> DRAW <=====<<
+
 function draw() {
   background(163, 99, 252);
   for (let i = 0; i < pelotas.length; i++) {
@@ -13,7 +13,7 @@ function draw() {
   }
 }
 
-function mousePressed(x, y) {
-  let pelota = new Pelota();
+function mousePressed() {
+  let pelota = new Pelota(mouseX, mouseY); // Pasar las coordenadas del clic como argumentos
   pelotas.push(pelota);
 }

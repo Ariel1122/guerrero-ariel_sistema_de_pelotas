@@ -1,9 +1,9 @@
 class Pelota {
-  constructor() {
-    this.posx = random(50, windowWidth - 50);
-    this.posy = random(50, 70);
-    this.velx = random(-5, 5); // Agregar velocidad inicial en X
-    this.vely = random(5, 15); // Agregar velocidad inicial en Y
+  constructor(_X, _Y) {
+    this.posx = _X;
+    this.posy = _Y;
+    this.velx = random(-5, 5);
+    this.vely = random(5, 15);
     this.acely = 0.98;
 
     this.diam = int(random(5, 50));
@@ -15,23 +15,26 @@ class Pelota {
     this.vely += this.acely;
     this.posy += this.vely;
 
-    // Verificar si la pelota ha llegado al suelo
+    // Comprueba si la pelota ha tocado el suelo
     if (this.posy + this.rad >= _piso) {
-      this.posy = _piso - this.rad; // Asegurarse de que no pase más allá del suelo
-      this.vely *= -0.9; // Rebote con una pérdida de energía (coeficiente de restitución)
-      this.velx *= 0.99; // Simular una pequeña pérdida de energía en la dirección X
+      //  verifica si la parte inferior de la pelota toca o cruza el suelo
+      this.posy = _piso - this.rad; //posición vertical de la pelota para que no pase a través del suelo
+      this.vely *= -1; //Esto simula un rebote
+      // this.velx *= 0.99;
     }
 
-    // Verificar si la pelota ha llegado a los bordes de la ventana
     if (this.posx + this.rad >= windowWidth) {
-      this.posx = windowWidth - this.rad; // Asegurarse de que no pase más allá del borde derecho
-      this.velx *= -1; // Invertir la dirección en X al llegar al borde
+      // verifica si la pelota ha alcanzado o cruzado el borde derecho de la ventana.
+
+      this.posx = windowWidth - this.rad; //posición horizontal de la pelota para que no pase más allá del borde derecho de la ventana
+      this.velx *= -1; // simula un rebote, haciendo que la pelota rebote en la dirección opuesta.
     } else if (this.posx - this.rad <= 0) {
-      this.posx = this.rad; // Asegurarse de que no pase más allá del borde izquierdo
-      this.velx *= -1; // Invertir la dirección en X al llegar al borde
+      //  verifica si la pelota ha cruzado el borde izquierdo de la ventana
+      this.posx = this.rad; //ajusta la posición horizontal de la pelota para que no pase más allá del borde izquierdo de la ventana
+      this.velx *= -1; // Invierte la velocidad horizontal, multiplicándola por -1. simula un rebote, la pelota rebota en la dirección opuesta.
     }
 
-    this.posx += this.velx;
+    this.posx += this.velx; //actualiza la posición horizontal de la pelota, this.posx agregando la velocidad horizontal actual this.velx
   }
 
   display() {
